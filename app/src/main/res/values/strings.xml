@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RustAndroidSample</string>
+    <string name="top_message">You\'ll meet this person today.</string>
 </resources>

@@ -9,14 +9,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).apply { setContentView(this.root) }
-        binding.sampleText.text = stringFromJNI()
+        val gender = someGender()
+        val name = "${someFirstName(gender)}.${someLastName()}"
+        val birthday = someBirthday()
+        val profile = "Name: $name\nGender: $gender\nBirthday: $birthday"
+        binding.sampleText.text = "${getString(R.string.top_message)}\n\n${profile}"
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    private external fun stringFromJNI(): String
+    private external fun someGender(): String
+    private external fun someFirstName(gender: String): String
+    private external fun someLastName(): String
+    private external fun someBirthday(): String
 
     companion object {
         init {
