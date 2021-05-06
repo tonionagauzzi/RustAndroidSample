@@ -12,7 +12,8 @@ class MainActivity : AppCompatActivity() {
         val gender = someGender()
         val name = "${someFirstName(gender)}.${someLastName()}"
         val birthday = someBirthday()
-        val profile = "Name: $name\nGender: $gender\nBirthday: $birthday"
+        val hobbies = someHobbies().joinToString(separator = ", ")
+        val profile = "Name: $name\nGender: $gender\nBirthday: $birthday\nHobbies: $hobbies"
         binding.sampleText.text = "${getString(R.string.top_message)}\n\n${profile}"
     }
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private external fun someFirstName(gender: String): String
     private external fun someLastName(): String
     private external fun someBirthday(): String
+    private external fun someHobbies(): Array<String>
 
     companion object {
         init {

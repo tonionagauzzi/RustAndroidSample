@@ -3,8 +3,9 @@ use crate::generator::human::first_name;
 use crate::generator::human::last_name;
 use crate::generator::human::gender;
 use crate::generator::human::birthday;
+use crate::generator::human::hobbies;
 use jni::objects::{JObject, JString};
-use jni::sys::jstring;
+use jni::sys::{jstring, jobjectArray};
 use jni::JNIEnv;
 use std::ffi::{CString, CStr};
 
@@ -52,4 +53,20 @@ pub unsafe extern "C" fn Java_com_vitantonio_nagauzzi_rustandroidsample_MainActi
     env.new_string(birthday())
         .expect("Couldn't create some birthday!")
         .into_inner()
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn Java_com_vitantonio_nagauzzi_rustandroidsample_MainActivity_someHobbies(
+    env: JNIEnv,
+    _this: JObject,
+) -> jobjectArray {
+    let hobbies = hobbies();
+    let arr = env.new_object_array(
+        hobbies.len() as i32,
+        env.find_class("java/lang/String").unwrap(),
+        env.new_string("").unwrap()).unwrap();
+    hobbies.into_iter().enumerate().for_each(|(index, name)| {
+        env.set_object_array_element(arr, index as i32, env.new_string(name).unwrap()).unwrap();
+    });
+    arr
 }
